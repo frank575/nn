@@ -1,7 +1,7 @@
 Dart
 ===
 ![](./hero.jpg)
-[回首頁](/nn)
+[回首頁](https://github.com/frank575/nn/)
 
 # 語法
 
