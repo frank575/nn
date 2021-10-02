@@ -1,7 +1,7 @@
 Redis
 ===
 ![](./hero.jpg)
-[回首頁](../)
+[回首頁](https://github.com/frank575/nn/)
 
 # 舊 
 1. [簡介及安裝及通用命令](./mds/舊/簡介及安裝及通用命令.md)
