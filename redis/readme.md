@@ -3,7 +3,17 @@ Redis
 ![](./hero.jpg)
 [回首頁](https://github.com/frank575/nn/)
 
+# 資源
+
+1. [try redis](https://try.redis.io/)
+  * 線上免費的 redis command line，不過無法調用所有指令
+2. [redis 命令參考](http://redisdoc.com/index.html)
+  * 這是博客名，不是只有命令內容
+
+---
+
 # 舊 
+
 1. [簡介及安裝及通用命令](./mds/舊/簡介及安裝及通用命令.md)
 
 ---
