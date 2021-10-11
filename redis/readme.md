@@ -31,11 +31,11 @@ Redis
 # 待分類
 
 1. [慢查詢](./mds/待分類/慢查詢.md)
-2. [pipeline](./mds/待分類/xxxxx.md)
-3. [發布訂閱](./mds/待分類/xxxxx.md)
-4. [Bitmap](./mds/待分類/xxxxx.md)
-5. [HyperLogLog](./mds/待分類/xxxxx.md)
-6. [GEO](./mds/待分類/xxxxx.md)
+2. [pipeline](./mds/待分類/pipeline.md)
+3. [發布訂閱](./mds/待分類/發布訂閱.md)
+4. [Bitmap](./mds/待分類/Bitmap.md)
+5. [HyperLogLog](./mds/待分類/HyperLogLog.md)
+6. [GEO](./mds/待分類/GEO.md)
 
 ---
 
