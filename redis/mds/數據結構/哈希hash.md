@@ -82,8 +82,9 @@
 	
 ### string 對比 hash
 
+
 |string|hash|
-|-|-|
+|---|---|
 |get|hget|
 |set setnx|hset hsetnx|
 |del|hdel|
@@ -94,7 +95,7 @@
 ### string & hash 序列化儲存對比
 
 |類型|命令|優點|缺點|
-|-|-|-|-|
+|---|---|---|---|
 |string|set key serializable|1. 編程簡單<br/>2. 可節約內存|1. 序列化開銷<br/>2. 設置屬性要操作整個數據|
 |string|set key:field value|1. 直觀<br/>2. 可以局部更新|1. 內存占用大<br/>2. key 較為分散|
 |hash|hset key field value|1. 直觀<br/>2. 節省空間<br/>3. 可以局部更新|1. 編程稍微複雜<br/>2. ttl 不好控制|
