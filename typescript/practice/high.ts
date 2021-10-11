@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 type Sex = 'female' | 'male'
 
 class Person {
@@ -168,7 +170,7 @@ let P2: new (name: string, sex: Sex) => Person = Person
 new P1('frank', 'male')
 new P2('frank', 'male')
 
-type CommonConstructor<T> = new (...args: any[]) => T
+type CommonConstructor<T = any> = new (...args: any[]) => T
 type ConstructorParametersType<T extends CommonConstructor<T>> =
   T extends new (...args: infer P) => any ? P : never
 
@@ -318,3 +320,238 @@ class Store<S> implements IStore<S> {
   }
   commit() {}
 }
+
+
+
+// 裝飾器
+const FirstClassDecorator = <T>(targetClass: CommonConstructor<T>) => {
+  console.log('targetClass.name:', targetClass.name)
+}
+const SecondClassDecorator = (params: any) => <T>(targetClass: CommonConstructor<T>) => {
+  console.log('targetClass.name:', targetClass.name)
+}
+
+// 執行順序為向上執行，也就是 Second -> First
+@FirstClassDecorator
+@SecondClassDecorator('修飾類的裝飾器參數')
+class CustomerService {
+  name: string = '下單'
+  constructor() {
+  }
+  buy(){
+    console.log(this.name + '購買')
+  }
+  placeOrder() {
+    console.log(this.name + '下單購買')
+  }
+}
+
+const LoggerInfoDecorator = <T extends new (...args: any[]) => any>(TargetClass: T): T => {
+  // extends 處理的話就可以等到對象實例化後執行
+  return class extends TargetClass {
+    constructor(...args: any) {
+      super(...args);
+      console.log('日誌信息...targetClass:', TargetClass.name)
+    }
+    methoddone() {
+      console.log('methoddone:', TargetClass.name)
+    }
+  }
+}
+
+interface LoggerInfoDecoratorInterface {
+  methoddone: () => void
+}
+
+// ts 不允許裝飾器突變，所以採用該方式將突變的值類型注入，或者是使用 mixin func 處理
+interface Test1 extends LoggerInfoDecoratorInterface {}
+
+@LoggerInfoDecorator
+class Test1 {
+  name!: string
+  constructor() {
+  }
+}
+
+const t1 = new Test1()
+t1.methoddone()
+
+const MyMethodDecorator = (targetClassPrototype: any, methodname: string, methodDescription: PropertyDescriptor) => {
+  methodDescription.value()
+}
+
+class RoleService {
+  public roleName: string = '管理員'
+
+  @MyMethodDecorator
+  distribRoles() {
+    console.log('分配角色...')
+  }
+}
+
+
+// 使用裝飾器實現依賴注入
+class Collection<T = any> {
+  private constructor() {}
+
+  static collection = new Collection()
+  private containerMap = new Map<string | symbol, any>()
+
+  public set(id: string | symbol, value: T): void {
+    this.containerMap.set(id, value)
+  }
+
+  public get(id: string | symbol): T {
+    return this.containerMap.get(id)
+  }
+
+  public has(id: string | symbol): boolean {
+    return this.containerMap.has(id)
+  }
+}
+
+type TRole = 'USER'
+class UserService {
+  role: TRole = 'USER'
+  login () {
+    console.log(this.role + '登入...')
+  }
+}
+
+type MyPropertyDecorator = (targetClassPrototype: any, propertyKey: string | symbol) => void
+type MyMethodDecorator = (targetClassPrototype: any, methodname: string, methodDescription: PropertyDescriptor) => void
+const Inject = (id: string): MyPropertyDecorator => {
+  return (t, k) => {
+    // design:key 取得該成員的類型(此為 UserService)
+    const PropClass = Reflect.getMetadata('design:key', t, k)
+    const propClassObj = new PropClass()
+  }
+}
+
+const Get = (reqpath: string): MyMethodDecorator => {
+  return (t, k, d) => {
+    // 將原數據放在原型的方法上
+    Reflect.defineMetadata("reqPath", reqpath, t, k)
+  }
+}
+
+const Controller = (rootPath: string) => {
+  return <T extends CommonConstructor>(t: T) => {
+    for (const k in t.prototype) {
+      Reflect.getMetadata('reqPath', t.prototype, k)
+    }
+  }
+}
+
+// 裝飾器執行順序：屬性 -> 方法參數 -> 方法 -> 類
+@Controller('/')
+class UserController {
+  @Inject('userService')
+  private userService?: UserService
+
+  @Get('/login')
+  public login() {
+    let peopleServiceInstance = Collection.collection.get('userService')
+    peopleServiceInstance.login()
+  }
+}
+
+let controller = new UserController()
+controller.login()
+
+// 原數據操作
+let obj = {
+  username: 'frank.wcw',
+  age: 25,
+  info() {
+    console.log('訊息')
+  }
+}
+
+// 在對象上定義元數據
+Reflect.defineMetadata('metaobjkey', '我是一個對象的元數據', obj)
+Reflect.getMetadata('metaobjkey', obj) // 我是一個對象的元數據
+
+// 在對象屬性上定義元數據
+Reflect.defineMetadata('usernamemetakey', '用戶名元數據', obj, 'username')
+Reflect.getMetadata('usernamemetakey', obj, 'username') // 用戶名元數據
+
+if (Reflect.hasMetadata('describe', obj)) {
+  console.log('obj存在describe元數據')
+} else {
+  console.log('obj不存在describe元數據')
+}
+
+// 在類上定義元數據
+@Reflect.metadata('decribe', '都是地球人')
+class People {
+  @Reflect.metadata('descible', '姓名不能包含非法漢字')
+  name = 'frank'
+
+  @Reflect.metadata('importinfo', '去吃屋馬好嗎')
+  eat() {}
+
+  @Reflect.metadata('firstname', '第一個名字')
+  @Reflect.metadata('lastname', '最後一個名字')
+  getFullName(name: string, age: number): string { return '' }
+}
+class ChinesePeople extends People {}
+
+// 獲取類上元數據
+Reflect.getMetadata('decribe', People) // 都是地球人
+// 獲取方法上的元數據 二參為原型
+Reflect.getMetadata('importinfo', People.prototype, 'eat') // 去吃屋馬好嗎
+// 獲取 People.prototype 上 getFullName 方法的全部元數據的 key
+// [
+//   'design:returntype',
+//   'design:paramtypes',
+//   'design:type',
+//   'firstname',
+//   'lastname'
+// ]
+Reflect.getMetadataKeys(People.prototype, 'getFullName')
+
+if (Reflect.hasMetadata('importinfo', People.prototype, 'eat')) {
+  console.log('People原型上的eat方法存在importinfo元數據')
+}
+// hasMetadata 能獲取父類原型上的元數據
+if (Reflect.hasMetadata('importinfo', ChinesePeople.prototype, 'eat')) {
+  console.log('ChinesePeople原型上的eat方法存在importinfo元數據')
+}
+// hasOwnMetadata 不能獲取父類原型上的元數據，僅能獲取自己的
+if (Reflect.hasOwnMetadata('importinfo', ChinesePeople.prototype, 'eat')) {
+  console.log('ChinesePeople原型上的eat方法存在importinfo元數據')
+}
+
+// 3個重要且特殊的內置元數據 key
+// 1. design:paramtypes
+//   1. 構造器所有參數數據類型組成的數組
+//   2. 類中方法全部參數的數據類型組成的數組
+// 2. design:type
+//   1. 獲取類屬性的數據類型
+//   2. 獲取類方法參數的數據類型
+// 3. design:returntype
+//   1. 獲取類方法返回值的數據類型
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
