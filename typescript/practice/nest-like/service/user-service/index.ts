@@ -1,4 +1,4 @@
-import {UserServiceImpl} from "../impl/user-service-impl";
+import {UserServiceImpl} from "./impl/user-service-impl";
 
 export abstract class UserService {
   // 用來決定實現類是誰
