@@ -44,7 +44,8 @@ Redis
 1. [持久化的作用](./mds/持久化/持久化的作用.md)
 2. [RDB](./mds/持久化/RDB.md)
 3. [AOF](./mds/持久化/AOF.md)
-7. [RDB與AOF的選擇](./mds/持久化/RDB與AOF的選擇.md)
+4. [RDB與AOF的選擇](./mds/持久化/RDB與AOF的選擇.md)
+5. [開發運維常見問題](./mds/持久化/開發運維常見問題.md)
 
 ---
 
