@@ -76,7 +76,7 @@
 # 使用場景
 
 1. 緩存
-	* 緩存視頻的基本信息(數據源在MYSQL中)偽代碼
+  * 緩存視頻的基本信息(數據源在MYSQL中)偽代碼  
 	![](./pics/緩存視頻的基本信息.png)
 	```typescript=
 	const getVideoInfo = (vid: number): VideoInfo => {
