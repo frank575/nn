@@ -7,6 +7,7 @@ export const Autowired = (injectId: string): MyPropDecorator => {
   return (c, k) => {
     const PropClass = Reflect.getMetadata('design:type', c, k)
     const propInstance = new PropClass()
-    collectionInstance.set(injectId, propInstance)
+    // collectionInstance.set(injectId, propInstance)
+    Reflect.defineProperty(c, injectId, { value: propInstance })
   }
 }
