@@ -9,7 +9,7 @@
 
 ### 重要 api
 
-> 以 Z 開頭
+> 以 s 開頭
 
 * 增
   * `sadd key element` 添加 element(如果 element 已存在則添加失敗)
