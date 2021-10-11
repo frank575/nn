@@ -5,7 +5,7 @@
 * 結構為 key-field-value
 * 可以把 key 當作是一張表，而 key 就是表 id
 
-### 重要 API
+# 重要 API
 
 > 記住 H，哈希都以 h 開頭
 
@@ -57,7 +57,7 @@
 * `hsetnx key field value` 沒 field 就寫
 	* O(1)
 		
-### 使用場景
+# 使用場景
 
 1. 計數器
 	* 用戶頁訪問數
@@ -80,7 +80,7 @@
 	}
 	```
 	
-### string 對比 hash
+# string 對比 hash
 
 
 |string|hash|
@@ -92,7 +92,7 @@
 |mset|hmset|
 |mget|hmget|
 
-### string & hash 序列化儲存對比
+# string & hash 序列化儲存對比
 
 |類型|命令|優點|缺點|
 |---|---|---|---|
