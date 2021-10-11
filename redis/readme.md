@@ -20,11 +20,11 @@ Redis
 
 # 數據結構
 
-1. [字符串string](./mds/數據結構/字符串string.md)
-2. [哈希hash](./mds/數據結構/哈希hash.md)
-3. [列表list](./mds/數據結構/列表list.md)
-4. [集合set](./mds/數據結構/集合set.md)
-5. [有序集合zset](./mds/數據結構/有序集合zset.md)
+1. [字符串 string](./mds/數據結構/字符串string.md)
+2. [哈希 hash](./mds/數據結構/哈希hash.md)
+3. [列表 list](./mds/數據結構/列表list.md)
+4. [集合 set](./mds/數據結構/集合set.md)
+5. [有序集合 zset](./mds/數據結構/有序集合zset.md)
 
 ---
 
@@ -33,7 +33,7 @@ Redis
 1. [慢查詢](./mds/待分類/慢查詢.md)
 2. [pipeline](./mds/待分類/pipeline.md)
 3. [發布訂閱](./mds/待分類/發布訂閱.md)
-4. [Bitmap](./mds/待分類/Bitmap.md)
+4. [位圖 Bitmap](./mds/待分類/位圖bitmap.md)
 5. [HyperLogLog](./mds/待分類/HyperLogLog.md)
 6. [GEO](./mds/待分類/GEO.md)
 
