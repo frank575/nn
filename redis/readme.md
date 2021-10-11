@@ -24,6 +24,7 @@ Redis
 1. [哈希hash](./mds/數據結構/哈希hash.md)
 3. [列表list](./mds/數據結構/列表list.md)
 4. [集合set](./mds/數據結構/集合set.md)
+5. [有序集合zset](./mds/數據結構/有序集合zset.md)
 
 ---
 
