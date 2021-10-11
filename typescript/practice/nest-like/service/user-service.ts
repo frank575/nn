@@ -1,13 +1,9 @@
-export class UserService {
-  public login(username: string, pwd: string, role: string) {
-    console.log('執行 userservice login 方法')
-    if (username === 'admin' && pwd === '123' && role === 'admin') {
-      return true
-    }
-    return false
-  }
+import {UserServiceImpl} from "../impl/user-service-impl";
 
-  public register() {
-    console.log('userservice register...')
-  }
+export abstract class UserService {
+  // 用來決定實現類是誰
+  public static getInstanceClass = UserServiceImpl
+
+  abstract login(username: string, pwd: string, role: string): boolean
+  abstract register(): void
 }

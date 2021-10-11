@@ -1,13 +1,20 @@
 import 'reflect-metadata'
-import {collectionInstance} from "../collection";
+import {TCommonPropDecorator} from "../util/type";
 
-type MyPropDecorator = (targetClassPrototype: any, propertyKey: string | symbol) => void
+export const Autowired = (dependencyId: string): TCommonPropDecorator => {
+  return (cp, k) => {
+    // 取得 autowired service 的類
+    const PropClass = Reflect.getMetadata('design:type', cp, k)
 
-export const Autowired = (injectId: string): MyPropDecorator => {
-  return (c, k) => {
-    const PropClass = Reflect.getMetadata('design:type', c, k)
-    const propInstance = new PropClass()
-    // collectionInstance.set(injectId, propInstance)
-    Reflect.defineProperty(c, injectId, { value: propInstance })
+    // 已經實例化過的就直接取出注入
+    if (Reflect.hasMetadata(dependencyId, PropClass.prototype, k)) {
+      cp.userService = Reflect.getMetadata(dependencyId, PropClass.prototype, k)
+      return
+    }
+
+    // 實例化類並寫入描述，防止二次創建，最後直接注入到類中
+    const instance = new PropClass.getInstanceClass()
+    Reflect.defineMetadata(dependencyId, instance, PropClass.prototype, k)
+    cp.userService = instance
   }
 }
