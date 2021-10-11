@@ -6,9 +6,9 @@ Redis
 # 資源
 
 1. [try redis](https://try.redis.io/)
-  * 線上免費的 redis command line，不過無法調用所有指令
+   * 線上免費的 redis command line，不過無法調用所有指令
 2. [redis 命令參考](http://redisdoc.com/index.html)
-  * 這是博客名，不是只有命令內容
+   * 這是博客名，不是只有命令內容
 
 ---
 
