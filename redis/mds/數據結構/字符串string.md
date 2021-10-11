@@ -26,7 +26,7 @@
 		* O(1)
 	* `decrby key value` key 自減 k
 		* O(1)
-	```redis=
+	```shell
 	> get counter
 	(nil)
 	> incr counter
@@ -94,7 +94,7 @@
 	```
 2. 計數器
 	* 紀錄用戶頁面訪問數量
-		```redis=
+		```shell
 		> incr user_id:pageview
 		(integer) 1
 		> incr user_id:pageview

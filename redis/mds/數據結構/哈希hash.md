@@ -15,7 +15,7 @@
 	* O(1)
 * `hdel key field` 刪
 	* O(1)
-	```redis=
+	```shell
 	> hset user:1:info name frank
 	1
 	> hget user:1:info name
