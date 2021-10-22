@@ -9,3 +9,6 @@
 
 ### 3. Typescript - [筆記](./typescript/readme.md)
 > 主要提供高級教程，基礎隨緣補充><
+
+### 4. kafka - [筆記](./)
+> 
